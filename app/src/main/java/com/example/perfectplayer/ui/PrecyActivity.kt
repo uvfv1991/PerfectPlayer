@@ -3,17 +3,18 @@ package com.example.perfectplayer.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.aleyn.mvvm.base.BaseActivity
 import com.aleyn.mvvm.base.NoViewModel
+import com.blankj.utilcode.util.ResourceUtils
+import com.example.perfectplayer.MainActivity
 import com.example.perfectplayer.R
 import com.example.perfectplayer.databinding.ActivityPracyBinding
-import java.io.*
 
 class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
 
@@ -29,11 +30,11 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
     }
 
     fun onClickDisagree(v: View?) {
-        System.exit(0) //退出软件
+        System.exit(0)
     }
 
     fun showPrivacy(privacyFileName: String?) {
-        val str = initAssets(privacyFileName)
+        val str =  ResourceUtils.readAssets2String(privacyFileName)
         val inflate: View =
             LayoutInflater.from(this).inflate(R.layout.dialog_privacy_show, null)
         val tv_title = inflate.findViewById<View>(R.id.tv_title) as TextView
@@ -58,52 +59,18 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
 
     }
 
-
-
+    //隐私检查
     fun PravicyCheck() {
         val status =
             getSharedPreferences("file", Context.MODE_PRIVATE)
                 .getBoolean("agree", false)
         if (status == true) {
-
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         } else {
-            showPrivacy("privacy.txt") //放在assets目录下的隐私政策文本文件
+            showPrivacy("privacy.txt")
         }
-    }
-    /**
-     * 从assets下的txt文件中读取数据
-     */
-    fun initAssets(fileName: String?): String? {
-        var str: String? = null
-        try {
-            val inputStream = assets.open(fileName)
-            str = getString(inputStream)
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        }
-        return str
-    }
-    companion object {
-        fun getString(inputStream: InputStream?): String {
-            var inputStreamReader: InputStreamReader? = null
-            try {
-                inputStreamReader = InputStreamReader(inputStream, "UTF-8")
-            } catch (e1: UnsupportedEncodingException) {
-                e1.printStackTrace()
-            }
-            val reader = BufferedReader(inputStreamReader)
-            val sb = StringBuffer("")
-            var line: String?
-            try {
-                while (reader.readLine().also { line = it } != null) {
-                    sb.append(line)
-                    sb.append("\n")
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            return sb.toString()
-        }
+
     }
 
     override fun layoutId(): Int {
