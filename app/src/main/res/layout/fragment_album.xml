@@ -10,14 +10,14 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/tr_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingClass">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginEnd="@dimen/margin_padding_15dp"
+            android:layout_marginStart="@dimen/margin_padding_15dp"
             android:id="@+id/rv_album"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:layout_height="wrap_content" />
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </LinearLayout>

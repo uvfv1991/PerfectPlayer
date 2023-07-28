@@ -67,6 +67,7 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
         if (status == true) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         } else {
             showPrivacy("privacy.txt")
         }

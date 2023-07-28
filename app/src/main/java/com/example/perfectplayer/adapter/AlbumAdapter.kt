@@ -1,25 +1,43 @@
 package com.example.perfectplayer.adapter
 
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.perfectplayer.R
-import com.example.perfectplayer.data.Album
+import com.example.perfectplayer.data.Video
+import com.example.perfectplayer.ui.album.AlbumFragment
+import com.example.perfectplayer.utils.ImageUtils
+import kotlinx.android.synthetic.main.fragment_album.rv_album
 
 /**
  *  author : jiangxue
  *  date : 2023/6/8 16:03
  *  description :
  */
-class AlbumAdapter(layoutResId: Int, data: MutableList<Album>) : BaseQuickAdapter<Album, BaseViewHolder>(layoutResId, data) {
+class AlbumAdapter(data: MutableList<Video>) :
+    BaseMultiItemQuickAdapter<Video, BaseViewHolder>(data) {
 
-    override fun convert(holder: BaseViewHolder, item: Album) {
-        holder.setText(R.id.tv_albumname, item.videoName)
-        holder.setText(R.id.tv_count, item.count)
+    init {
+        //为不同类型添加不同的布局
+        addItemType(Video.title,R.layout.adapter_video_title)
+        addItemType(Video.list , R.layout.adapter_video_list)
+    }
 
-        /* Glide.with(context).setDefaultRequestOptions(
-            RequestOptions()
-                .centerCrop()
-        ).load(item?.data?.image).into(helper.getView<View>(R.id.im_cover) as ImageView)
-    }*/
+
+    override fun convert(holder: BaseViewHolder, item: Video) {
+
+        when(holder.itemViewType){
+
+            AlbumFragment.TYPE_NO -> {//获取标题
+                holder.setText(R.id.tv_albumname, item.videoName)
+                holder.setText(R.id.tv_count, item.count.toString()+"个数")
+            }
+            AlbumFragment.TYPE_LIST -> {//获取列表
+                holder.setText(R.id.tv_videoname, item.videoName)
+
+                ImageUtils.loadImage(holder.getView(R.id.im_icon), item.thumbPath.toString())
+            }
+
+        }
+
     }
 }

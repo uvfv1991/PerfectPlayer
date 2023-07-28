@@ -6,7 +6,7 @@ buildscript {
         google()
         maven{ url 'http://maven.aliyun.com/nexus/content/repositories/central/'}
         jcenter()
-       // maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        // maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -20,9 +20,8 @@ allprojects {
     repositories {
         google()
         maven{ url 'http://maven.aliyun.com/nexus/content/repositories/central/'}
-        maven { url "https://jitpack.io" }
         jcenter()
-        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+        //maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
 }
 

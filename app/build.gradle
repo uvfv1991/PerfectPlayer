@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -13,6 +13,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,13 +28,6 @@ android {
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
-    }
-
-    sourceSets {
-        main.java.srcDirs += "src/main/java"
-    }
-    lintOptions {
-        abortOnError false
     }
 }
 configurations.all {
@@ -63,6 +57,12 @@ dependencies {
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
 
     implementation 'com.permissionx.guolindev:permissionx:1.2.2'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
+
+    //exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.18.5'
 
 }

@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aleyn.mvvm.base.BaseFragment
 import com.blankj.utilcode.util.ToastUtils
+import com.example.kotlin.ui.VideoDetailActivity
 import com.example.perfectplayer.R
 import com.example.perfectplayer.adapter.AlbumAdapter
+import com.example.perfectplayer.data.Video
+import com.example.perfectplayer.utils.ToActivityHelper
 import kotlinx.android.synthetic.main.fragment_album.rv_album
 
 /**
@@ -30,9 +32,9 @@ initRecycle()
     }
     private var albumAdapter: AlbumAdapter? = null
     private fun initRecycle() {
-        albumAdapter=AlbumAdapter(R.layout.adapter_video, viewModel.dataList)
+        albumAdapter=AlbumAdapter(viewModel.dataList)
         rv_album?.layoutManager =
-           LinearLayoutManager(context,  LinearLayoutManager.HORIZONTAL, false)
+           LinearLayoutManager(context,  LinearLayoutManager.VERTICAL, false)
         rv_album.adapter =albumAdapter
 
         rv_album.setItemAnimator(DefaultItemAnimator())
@@ -42,12 +44,23 @@ initRecycle()
                 ToastUtils.showShort("OnItemClickListener")
                 when {
                     viewModel.currentType.value == TYPE_NO -> {
-                      var count=viewModel.getAlbumList()
+                      viewModel.getAlbumList()
 
                         //获取本地所有视频并列表显示出来
                     }
                     viewModel.currentType.value == TYPE_LIST-> {
+
+                        var bundle = Bundle()
+                        var model = data[position] as Video
+                        bundle.putSerializable(
+                            "detail", model
+                        )
                        //播放已经选中的视频
+                        ToActivityHelper.getInstance()!!.toActivity(
+                            activity!!,
+                            VideoDetailActivity::class.java, bundle
+                        )
+
                     }
                 }
             }
@@ -64,14 +77,19 @@ initRecycle()
         super.observe()
         viewModel.currentType.observe(this,Observer{type->
             when(type){
-                TYPE_NO -> {
+                TYPE_NO -> {//获取标题
                     albumAdapter?.notifyDataSetChanged()
                 }
-                TYPE_LIST -> {
+                TYPE_LIST -> {//获取列表
+
+                    albumAdapter?.setNewInstance(viewModel.dataList)
+                    rv_album.adapter=albumAdapter
                     albumAdapter?.notifyDataSetChanged()
                 }
             }
         })
+
+
 
 
         if (viewModel.dataList.isEmpty()) {
