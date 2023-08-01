@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -15,6 +15,57 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.PopupOverlay" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:popupBackground">?attr/colorPrimary</item>
+        <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
+        <item name="android:dropDownVerticalOffset">5dip</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+    </style>
+
+
+    <declare-styleable name="CustomToolBar">
+
+        <attr name="imgBack" format="reference" />
+        <attr name="imgBackWidth" format="dimension|reference"/>
+        <attr name="imgBackHight" format="dimension|reference"/>
+
+        <attr name="tvToolBarTitle" format="dimension|string" />
+        <attr name="tvToolBarTitleSize" format="dimension|reference" />
+
+        <attr name="rightButtonIcon" format="reference" />
+        <attr name="isShowButton" format="boolean" />
+        <attr name="rightButtonText" format="dimension|string" />
+
+    </declare-styleable>
+
+
+
+
+
+    <declare-styleable name="selectFileChoice">
+        <attr name="MainOptionMode" format="enum">
+            <enum name="多选" value="0"></enum>
+            <enum name="删除" value="1"></enum>
+            <enum name="重命名" value="2"></enum>
+            <enum name="取消排序置顶" value="3"></enum>
+        </attr>
+
+        <attr name="FilesOptionMode" format="enum">
+            <enum name="多选" value="0"></enum>
+            <enum name="删除" value="1"></enum>
+            <enum name="重命名" value="2"></enum>
+            <enum name="发送安装文件" value="3"></enum>
+            <enum name="其他打开方式" value="4"></enum>
+            <enum name="添加到私密视频列表" value="5"></enum>
+            <enum name="DLNA投屏播放" value="6"></enum>
+            <enum name="查看详情" value="7"></enum>
+        </attr>
+    </declare-styleable>
+
 
 </resources>

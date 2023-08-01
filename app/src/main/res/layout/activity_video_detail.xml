@@ -1,47 +1,42 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
-
-    <RelativeLayout
-        android:id="@+id/rl"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary">
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#fff"
-            android:textSize="20sp"/>
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_back"
-            android:onClick="onClickMenuOrBack"
-            />
-    </RelativeLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_below="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/txt_link_blue">
 
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="#fff"
+                android:textSize="20sp"/>
+
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_back"
+                android:contentDescription="@string/action_settings"
+                android:onClick="onClickMenuOrBack" />
+        </RelativeLayout>
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/styledPlayerView"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:surface_type="texture_view"
             android:background="#000000"/>

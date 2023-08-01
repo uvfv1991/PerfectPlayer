@@ -1,14 +1,11 @@
 package com.example.kotlin.ui
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
-import android.widget.ProgressBar
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.aleyn.mvvm.base.BaseActivity
 import com.aleyn.mvvm.base.NoViewModel
 import com.example.perfectplayer.R
@@ -40,8 +37,7 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
     override fun initView(savedInstanceState: Bundle?) {
         var intent = intent
         video = intent.getSerializableExtra("detail") as Video
-
-        Log.e("test","url"+video.path)
+        Log.e(TAG,"url"+video.path)
     }
 
     private fun initPlayer() {
@@ -160,7 +156,10 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
         TODO("Not yet implemented")
     }
 
+    fun onClickMenuOrBack(v: View?) {
+        finish()
 
+    }
 }
 
 

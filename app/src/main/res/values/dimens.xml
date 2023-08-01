@@ -17,10 +17,12 @@
     <dimen name="font_size_10sp">10sp</dimen>
 
     <dimen name="margin_padding_2dp">2dp</dimen>
+    <dimen name="margin_3dp">3dp</dimen>
     <dimen name="margin_padding_5dp">5dp</dimen>
     <dimen name="margin_padding_10dp">10dp</dimen>
     <dimen name="margin_padding_15dp">15dp</dimen>
     <dimen name="margin_padding_16dp">16dp</dimen>
     <dimen name="margin_padding_20dp">20dp</dimen>
+    <dimen name="dimen_25dp">25dp</dimen>
     <dimen name="menu_height">48dp</dimen>
 </resources>
