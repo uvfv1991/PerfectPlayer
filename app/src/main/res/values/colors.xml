@@ -86,4 +86,18 @@
 
     <color name="bg">#F0F0F0</color>
     <color name="txt_color">#48495F</color>
+
+
+    <color name="simple_exo_style_color">#005fff</color>
+    <color name="light_green">#89F9DF</color>
+    <color name="live_yellow">#E1AF4A</color>
+    <!--视频加载缓存进度的颜色-->
+    <color name="timeBar_buffered_color">@color/light_green</color>
+    <!--已经播放过视频的颜色-->
+    <color name="timeBar_played_color">#c63020</color>
+    <!--没有加载过进度的颜色-->
+    <color name="timeBar_unplayed_color">@color/live_yellow</color>
+    <!--视频进度圆点的颜色-->
+    <color name="timeBar_scrubber_color">@color/colorAccent</color>
+    <color name="switch_color">#80000000</color>
 </resources>

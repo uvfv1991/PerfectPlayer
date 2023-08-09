@@ -7,10 +7,14 @@ package com.example.perfectplayer.data
  *  description :
  */
 enum class Option(val number: Int, val keyname: String) {
-    DUOXUAN(1,"多选"),
-    DELETE(2, "删除"),
-    REFECT(3, "重命名"),
-    QXZDPX(4, "取消排序置顶");
+    DUOXUAN(0,"多选"),
+    DELETE(1, "删除"),
+    REFECT(2, "重命名"),
+    QXZDPX(3, "取消排序置顶"),
+    QTDKFS(4, "其他打开方式"),
+    TJSMLB(5, "添加到私密播放列表"),
+    DLNA(6, "DLNA投屏播放"),
+    CKXQ(6, "查看详情");
 
 
     fun getKeyName(day: Option): String{

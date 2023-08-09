@@ -11,7 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
-
+        <CheckBox
+            android:id="@+id/cb_album"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
 
     <ImageView
         android:id="@+id/im_icon"

@@ -1,22 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.scwang.smart.refresh.layout.SmartRefreshLayout
-        android:id="@+id/tr_refresh"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/txt_link_blue"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="@mipmap/ic_back"
+            app:subtitleTextColor="#FFF"
+            app:title="相册视频"
+            app:titleTextColor="#FFF">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:id="@+id/ll_layout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginEnd="@dimen/margin_padding_15dp"
-            android:layout_marginStart="@dimen/margin_padding_15dp"
-            android:id="@+id/rv_album"
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/tr_refresh"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_album"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_notbottom"
+        android:layout_width="match_parent"
+        android:background="@color/bg_gray"
+        android:layout_height="50dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <CheckBox
+            android:id="@+id/checkall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+             android:gravity="center"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@+id/checkall"
+            android:text="全选"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="55dp"
+            android:layout_toLeftOf="@id/tv_delete"
+            android:src="@mipmap/dustin1"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_marginRight="15dp"
+            android:text="删除"
+            android:textSize="18sp"
+
+            />
+    </RelativeLayout>
+    <!--24或者以上的话要在xml中加app:behavior_hideable=”true”-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

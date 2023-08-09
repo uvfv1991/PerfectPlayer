@@ -19,19 +19,8 @@
             app:navigationIcon="@mipmap/ic_back"
             app:subtitleTextColor="#FFF"
             app:title="ToolBar Title"
-            app:titleTextColor="#FFF"
-            tools:ignore="MissingConstraints">
+            app:titleTextColor="#FFF">
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="视频"
-                android:textColor="@color/font_white"
-                android:gravity="center_vertical"
-                android:minHeight="48dp"
-                android:padding="5dp"
-                android:textSize="@dimen/font_size_22sp" />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -46,6 +35,7 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/action_settings"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

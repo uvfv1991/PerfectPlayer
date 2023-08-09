@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
@@ -11,6 +11,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     tools:ignore="MissingConstraints">
+
+    <CheckBox
+        android:id="@+id/cb_album"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
     <ImageView
         android:id="@+id/im_album"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,8 +29,9 @@
     <TextView
         android:id="@+id/tv_albumname"
         android:layout_width="180dp"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:textSize="20sp" />
 
     <TextView

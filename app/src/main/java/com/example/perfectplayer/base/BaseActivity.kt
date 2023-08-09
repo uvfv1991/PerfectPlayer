@@ -1,8 +1,7 @@
 package com.example.perfectplayer.base
 
 import androidx.appcompat.app.AppCompatActivity
-import com.blankj.utilcode.util.BusUtils
-import com.google.common.eventbus.EventBus
+import org.greenrobot.eventbus.EventBus
 
 /**
  *  author : jiangxue
@@ -14,12 +13,12 @@ open class BaseActivity:AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        //EventBus.getDefault().register(this)
+        EventBus.getDefault().register(this)
     }
 
     override fun onStop() {
         super.onStop()
 
-        //EventBus.getDefault().unregister(this)
+        EventBus.getDefault().unregister(this)
     }
 }

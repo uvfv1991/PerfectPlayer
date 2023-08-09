@@ -44,28 +44,20 @@
     </declare-styleable>
 
 
+    <style name="MyMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Add attributes here -->
+        <item name="colorPrimary">@color/txt_link_blue</item>
+    </style>
 
 
 
-    <declare-styleable name="selectFileChoice">
-        <attr name="MainOptionMode" format="enum">
-            <enum name="多选" value="0"></enum>
-            <enum name="删除" value="1"></enum>
-            <enum name="重命名" value="2"></enum>
-            <enum name="取消排序置顶" value="3"></enum>
-        </attr>
+    <style name="title_player">
 
-        <attr name="FilesOptionMode" format="enum">
-            <enum name="多选" value="0"></enum>
-            <enum name="删除" value="1"></enum>
-            <enum name="重命名" value="2"></enum>
-            <enum name="发送安装文件" value="3"></enum>
-            <enum name="其他打开方式" value="4"></enum>
-            <enum name="添加到私密视频列表" value="5"></enum>
-            <enum name="DLNA投屏播放" value="6"></enum>
-            <enum name="查看详情" value="7"></enum>
-        </attr>
-    </declare-styleable>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
 
+    </style>
 
 </resources>

@@ -15,7 +15,6 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.aleyn.mvvm.R
 import com.aleyn.mvvm.event.Message
-import com.blankj.utilcode.util.BusUtils
 import com.blankj.utilcode.util.ToastUtils
 import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
@@ -45,8 +44,10 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<*>
         if (ViewDataBinding::class.java != cls && ViewDataBinding::class.java.isAssignableFrom(cls)) {
             mBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
+
             return mBinding?.root
         }
+        setHasOptionsMenu(true)
         return inflater.inflate(layoutId(), container, false)
     }
 
@@ -57,13 +58,17 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         lifecycle.addObserver(viewModel)
         //注册 UI事件
         registorDefUIChange()
+        //页面数据初始化方法
+        initData()
         initView(savedInstanceState)
     }
 
     open fun initView(savedInstanceState: Bundle?) {}
+
+    open fun initData() {}
     override fun onStart() {
         super.onStart()
-        BusUtils.register(this)
+        EventBus.getDefault().register(this)
     }
     override fun onResume() {
         super.onResume()
@@ -72,7 +77,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
 
     override fun onStop() {
         super.onStop()
-        BusUtils.unregister(this)
+        EventBus.getDefault().unregister(this)
     }
     abstract fun layoutId(): Int
 

@@ -6,17 +6,32 @@ package com.example.perfectplayer.event
  *  description :
  */
 
-class MessageEvent internal constructor(message: String) {
+class MessageEvent(type: Int, message: String) {
+    private var type: Int
+    private var message: String
 
-    private var message: String? = null
     init {
+        this.type = type
         this.message = message
     }
-    internal fun getMessage(): String? {
+
+    override fun toString(): String {
+        return "type=$type--message= $message"
+    }
+
+    fun getType(): Int {
+        return type
+    }
+
+    fun setType(type: Int) {
+        this.type = type
+    }
+
+    fun getMessage(): String {
         return message
     }
+
     fun setMessage(message: String) {
         this.message = message
     }
 }
-

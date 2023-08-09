@@ -15,6 +15,8 @@ import com.blankj.utilcode.util.ResourceUtils
 import com.example.perfectplayer.MainActivity
 import com.example.perfectplayer.R
 import com.example.perfectplayer.databinding.ActivityPracyBinding
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 
 class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
 
@@ -27,11 +29,16 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
         getSharedPreferences("file", Context.MODE_PRIVATE).edit()
             .putBoolean("agree", true)
             .apply()
+     /*   val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()*/
+
+
+        startActivity<MainActivity>()
+        finish()
     }
 
-    fun onClickDisagree(v: View?) {
-        System.exit(0)
-    }
+
 
     fun showPrivacy(privacyFileName: String?) {
         val str =  ResourceUtils.readAssets2String(privacyFileName)
