@@ -14,6 +14,7 @@ package com.example.kotlin.ui
  import android.view.WindowManager
  import androidx.media3.common.C
  import androidx.media3.common.MediaItem
+ import androidx.media3.common.MediaMetadata
  import androidx.media3.common.PlaybackException
  import androidx.media3.common.PlaybackParameters
  import androidx.media3.common.Player
@@ -38,6 +39,7 @@ package com.example.kotlin.ui
  import kotlinx.android.synthetic.main.activity_video_detail.playerView
  import kotlinx.android.synthetic.main.activity_video_detail.titleText
  import kotlinx.android.synthetic.main.activity_video_detail.tv_moreScale
+ import kotlinx.android.synthetic.main.adapter_video_title.tv_albumname
  import org.jetbrains.anko.contentView
  import org.jetbrains.anko.toast
  import java.util.Formatter
@@ -101,21 +103,6 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
 
     * 视频编码的存在，视频编码的作用就是对传输图片进行压缩，从而达到尽量还原画面的同时，得到更小的体积。*/
 
-//是滞支持265
-   /* fun isH265HardwareDecoderSupport(): Boolean {
-        val codecList = MediaCodecList
-        val codecInfos: Array<MediaCodecInfo> = codecList.codecInfos
-        for (i in codecInfos.indices) {
-            val codecInfo: MediaCodecInfo = codecInfos[i]
-            if (!codecInfo.isEncoder() && (codecInfo.getName().contains("hevc")
-                        && !isSoftwareCodec(codecInfo.getName()))
-            ) {
-                return true
-            }
-        }
-        return false
-    }*/
-
     //是否支持软解
     fun isSoftwareCodec(codecName: String): Boolean {
         if (codecName.startsWith("OMX.google.")) {
@@ -141,7 +128,7 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
             toast("截图成功，保存为"+ (file?.path))
         }
     }
-
+    private var isFullscreen = false
     //是否播放过
     protected var mHadPlay = false
 
@@ -152,28 +139,33 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
         when(mType){
             0->mType = 1
             1->mType = 2
-            2->mType = 3
-            3->mType = 4
-            4->mType = 5
 
         }
         resolveTypeUI()
+
     }
 
-    /**
-     * 显示比例
-     * 注意，GSYVideoType.setShowType是全局静态生效，除非重启APP。
-     */
+    private fun showLock() {
+
+       //playerView.hideController()
+
+        //playerView.showController()
+    }
+
     private fun resolveTypeUI() {
         when(mType){
-            1->tv_moreScale.setText("16:9")
-            2->tv_moreScale.setText("4:3")
-            3->tv_moreScale.setText("全屏")
-            4->tv_moreScale.setText("拉伸全屏")
-            0->tv_moreScale.setText("默认比例")
+            1->{
+                tv_moreScale.setText("全屏")
+                isFullscreen=true
+            }
+
+            2->{
+                tv_moreScale.setText("默认比例")
+                isFullscreen=false
+            }
 
         }
-
+        toggleFullscreen()
 
     }
     override fun initData() {
@@ -196,7 +188,7 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
             Log.e("video", "onVideoSizeChanged")
         }
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-
+            Log.e("video", "onPlayWhenReadyChanged")
         }
         override fun onPlaybackStateChanged(playbackState: @Player.State Int) {
             Log.e("video", "onPlaybackStateChanged")
@@ -221,13 +213,23 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
                 //showControls()
             }
         }
-        override fun onIsPlayingChanged(isPlaying: Boolean) {
-            super.onIsPlayingChanged(isPlaying)
-            Log.e("video", "onIsPlayingChanged")
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            super.onMediaItemTransition(mediaItem, reason)
+            //Log.e("video", "2"+dataList.get(reason).videoName)
+            //titleText.text=dataList.get(reason).videoName
         }
-        override fun onTracksChanged(tracks: Tracks) {
-            Log.e("video", "onTracksChanged")
+
+
+        override fun onPositionDiscontinuity(
+            oldPosition: Player.PositionInfo,
+            newPosition: Player.PositionInfo,
+            reason: Int
+        ) {
+            super.onPositionDiscontinuity(oldPosition, newPosition, reason)
+            Log.e("video", "4"+dataList.get(newPosition.mediaItemIndex).videoName)
+            titleText.text=dataList.get(newPosition.mediaItemIndex).videoName
         }
+
     }
 
     private fun stringForTime(timeMs: Int): String? {
@@ -255,14 +257,6 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
 
             else -> super.onOptionsItemSelected(item)
         }
-    }
-    private fun togglePlay() {
-        if (isPlaying) {
-            player!!.pause()
-        } else {
-            player!!.play()
-        }
-        isPlaying = !isPlaying
     }
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -366,10 +360,6 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
         finish()
 
     }
-
-    fun isPlaying(): Boolean {
-        return player?.getPlaybackState() == Player.STATE_READY && player?.getPlayWhenReady()!! && player?.getPlaybackSuppressionReason() == PLAYBACK_SUPPRESSION_REASON_NONE
-    }
     override fun callAct(str: Float, onlyfile: Boolean, dirFile: Boolean) {
        // 设置播放速度和音调均为2倍速
         player?.playbackParameters =PlaybackParameters(str,1F)
@@ -381,7 +371,7 @@ class VideoDetailActivity : BaseActivity<NoViewModel, ActivityVideoDetailBinding
     }
 
 
-    private var isFullscreen = false
+
 
     //设置是滞全屏
     private fun toggleFullscreen() {

@@ -52,6 +52,7 @@ import org.jetbrains.anko.support.v4.selector
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.yesButton
 import java.util.Timer
+import java.util.TimerTask
 import kotlin.concurrent.schedule
 
 
@@ -75,19 +76,22 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun initView(savedInstanceState: Bundle?) {
-       toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_baseline_arrow_back_24, null)
-        val mActivity = activity as AppCompatActivity
-        mActivity.setSupportActionBar(toolbar)
-        var actionBar : ActionBar? = mActivity.supportActionBar
+        if (isAdded){
+            toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_baseline_arrow_back_24, null)
+            val mActivity = activity as AppCompatActivity
+            mActivity.setSupportActionBar(toolbar)
+            var actionBar : ActionBar? = mActivity.supportActionBar
 // enabling action bar app icon and behaving it as toggle button
-        actionBar?.setDisplayHomeAsUpEnabled(true);
-        actionBar?.setHomeButtonEnabled(true);
-        behavior = BottomSheetBehavior.from(rl_notbottom)
-        behavior!!.setSkipCollapsed(true)
-        behavior!!.setHideable(true)
-        behavior!!.setState(STATE_HIDDEN)
-        initRecycle()
-        initEvent()
+            actionBar?.setDisplayHomeAsUpEnabled(true);
+            actionBar?.setHomeButtonEnabled(true);
+            behavior = BottomSheetBehavior.from(rl_notbottom)
+            behavior!!.setSkipCollapsed(true)
+            behavior!!.setHideable(true)
+            behavior!!.setState(STATE_HIDDEN)
+            initRecycle()
+            initEvent()
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -200,17 +204,6 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
 
     }
 
-
-    private fun showBehaviro(b: Boolean) {
-        if (b){
-            behavior!!.setState(STATE_COLLAPSED)
-        }else{
-            behavior!!.setHideable(true)
-            behavior!!.setState(STATE_HIDDEN)
-        }
-
-    }
-
     @RequiresApi(Build.VERSION_CODES.N)
     override fun observe() {
         super.observe()
@@ -301,11 +294,6 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
 
 
     }
-    /**
-     * scroll to top
-     */
-    fun smoothScrollToPosition() = rv_album.scrollToPosition(0)
-
 
     companion object {
         const val TYPE_NO = 0
@@ -326,6 +314,7 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK
             && event.action == KeyEvent.ACTION_DOWN
@@ -349,10 +338,6 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        hideRefreshAnimation()
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         re_menu=item
@@ -367,6 +352,7 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onPrepareOptionsMenu(menu: Menu) {
 
         refresh = menu!!.findItem(R.id.menurefresh)
@@ -384,13 +370,11 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
 
 
     }
-
+    var schedule :TimerTask?=null
 
     @SuppressLint("NewApi")
     private fun hideRefreshAnimation() {
-        Timer().schedule(7000){ //执行的任务
-            re_menu?.actionView?.clearAnimation()
-            re_menu?.actionView =null
+        schedule = Timer().schedule(6000) { //执行的任务
             w?.clearAnimation()
 
             Looper.prepare()
@@ -399,4 +383,9 @@ class AlbumFragment: BaseFragment<AlbumViewModel, ViewDataBinding>(),OnClickList
         }
     }
 
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

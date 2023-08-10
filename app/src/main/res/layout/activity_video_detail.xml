@@ -37,8 +37,8 @@
                 android:id="@+id/titleText"
                 style="@style/title_player"
                 android:textColor="#fff"
-                android:visibility="gone"
-                android:textSize="16sp"/>
+                android:visibility="visible"
+                android:textSize="13sp"/>
 
             <ImageView
                 android:id="@+id/iv_setting"
@@ -75,7 +75,8 @@
             <ImageView
                 android:id="@+id/iv_rote"
                 style="@style/title_player"
-                android:layout_height="27dp"
+                android:layout_height="26dp"
+                android:visibility="gone"
                 android:src="@mipmap/xz" />
 
 

@@ -4,17 +4,15 @@ package com.example.perfectplayer.ui.album.SettingFragment
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.Nullable
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,7 +23,6 @@ import com.example.perfectplayer.utils.ScreenUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.activity_video_detail.playerView
 import kotlinx.android.synthetic.main.fragment_base_pager.cb_dir
 import kotlinx.android.synthetic.main.fragment_base_pager.cb_simple
 import kotlinx.android.synthetic.main.fragment_base_pager.cb_slider
@@ -57,7 +54,18 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
         //返回BottomSheetDialog的实例
         return BottomSheetDialog(this.requireContext())
     }
-
+    private fun fixHeight() {
+        if (null == getView()) {
+            return
+        }
+        val parent = getView()!!.parent as View
+        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(parent)
+        getView()!!.measure(0, 0)
+        behavior.peekHeight = getView()!!.measuredHeight
+        val params = parent.layoutParams as CoordinatorLayout.LayoutParams
+        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        parent.layoutParams = params
+    }
     override fun getView(): View? {
         return super.getView()
     }
@@ -74,7 +82,7 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
     override fun onStart() {
         Log.e("TAG", "onStart: ")
         super.onStart()
-        //获取dialog对象
+      /*  //获取dialog对象
         val dialog = dialog as BottomSheetDialog?
         //把windowsd的默认背景颜色去掉，不然圆角显示不见
         dialog!!.window?.findViewById<View>(R.id.design_bottom_sheet)?.setBackgroundDrawable(
@@ -95,14 +103,9 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
             behavior.peekHeight = getPeekHeight()
             // 初始为展开状态
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
+*/
 
-
-           /* val mReBack = view!!.findViewById<ImageView>(R.id.re_back_img)
-            //设置监听
-            mReBack.setOnClickListener(View.OnClickListener { //关闭弹窗
-                behavior.state = BottomSheetBehavior.STATE_HIDDEN
-            })*/
-        }
+        fixHeight()
         initRadioGroup()
         initEvent()
     }
