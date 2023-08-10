@@ -13,5 +13,4 @@ object MVVMLin {
     }
 
     fun getConfig() = mConfig
-
 }

@@ -10,14 +10,17 @@ enum class ERROR(private val code: Int, private val err: String) {
      * 未知错误
      */
     UNKNOWN(1000, "未知错误"),
+
     /**
      * 解析错误
      */
     PARSE_ERROR(1001, "解析错误"),
+
     /**
      * 网络错误
      */
     NETWORD_ERROR(1002, "网络错误"),
+
     /**
      * 协议出错
      */
@@ -31,7 +34,8 @@ enum class ERROR(private val code: Int, private val err: String) {
     /**
      * 连接超时
      */
-    TIMEOUT_ERROR(1006, "连接超时");
+    TIMEOUT_ERROR(1006, "连接超时"),
+    ;
 
     fun getValue(): String {
         return err
@@ -40,5 +44,4 @@ enum class ERROR(private val code: Int, private val err: String) {
     fun getKey(): Int {
         return code
     }
-
 }

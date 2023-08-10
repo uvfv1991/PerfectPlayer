@@ -9,9 +9,7 @@ import okhttp3.Request
  */
 interface FormatPrinter {
 
-
     fun printJsonRequest(request: Request?, bodyString: String?)
-
 
     fun printFileRequest(request: Request?)
 
@@ -36,7 +34,7 @@ interface FormatPrinter {
         bodyString: String?,
         segments: List<String?>?,
         message: String?,
-        responseUrl: String?
+        responseUrl: String?,
     )
 
     /**
@@ -55,6 +53,6 @@ interface FormatPrinter {
         headers: String?,
         segments: List<String?>?,
         message: String?,
-        responseUrl: String?
+        responseUrl: String?,
     )
 }

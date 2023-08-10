@@ -1,7 +1,5 @@
-package com.example.perfectplayer.ui.album.SettingFragment
+package com.example.perfectplayer.ui.album.SettingFragment // ktlint-disable package-name
 
-
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
@@ -33,13 +31,12 @@ import kotlinx.android.synthetic.main.fragment_base_pager.slider
 import kotlinx.android.synthetic.main.fragment_base_pager.tv_bsbf
 import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
 
-
 /**
  *  author : jiangxue
  *  date : 2023/8/7 9:34
  *  description :
  */
-class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchListener  {
+class SettingBottomSheetFragment : BottomSheetDialogFragment(), View.OnTouchListener {
 
     private var mContext: Context? = null
     private var view: View? = null
@@ -47,11 +44,9 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
     val name: MutableList<String> = ArrayList()
     private lateinit var mCallback: IFragmentCallback
 
-
-
     override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
         Log.e("TAG", "onCreateDialog: ")
-        //返回BottomSheetDialog的实例
+        // 返回BottomSheetDialog的实例
         return BottomSheetDialog(this.requireContext())
     }
     private fun fixHeight() {
@@ -72,39 +67,14 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (isAdded){
+        if (isAdded) {
             mCallback = context as IFragmentCallback
         }
-
-
     }
 
     override fun onStart() {
         Log.e("TAG", "onStart: ")
         super.onStart()
-      /*  //获取dialog对象
-        val dialog = dialog as BottomSheetDialog?
-        //把windowsd的默认背景颜色去掉，不然圆角显示不见
-        dialog!!.window?.findViewById<View>(R.id.design_bottom_sheet)?.setBackgroundDrawable(
-            ColorDrawable(
-                Color.TRANSPARENT
-            )
-        )
-        //获取diglog的根部局
-        val bottomSheet = dialog.delegate.findViewById<FrameLayout>(R.id.design_bottom_sheet)
-        if (bottomSheet != null) {
-            //获取根部局的LayoutParams对象
-            val layoutParams = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
-            layoutParams.height = getPeekHeight()
-            //修改弹窗的最大高度，不允许上滑（默认可以上滑）
-            bottomSheet.layoutParams = layoutParams
-            val behavior = BottomSheetBehavior.from(bottomSheet)
-            //peekHeight即弹窗的最大高度
-            behavior.peekHeight = getPeekHeight()
-            // 初始为展开状态
-            behavior.state = BottomSheetBehavior.STATE_EXPANDED
-*/
-
         fixHeight()
         initRadioGroup()
         initEvent()
@@ -112,50 +82,33 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
     var simpleFile = false
     var allFile = false
     private fun initEvent() {
-        cb_slider.isChecked=true
-        slider.value= 1.0F
-        slider.addOnChangeListener { slider, value, fromUser -> tv_bsbf.text="变速播放："+ScreenUtils.getFloatNoMoreThanOneDigits(value).toString()
+        cb_slider.isChecked = true
+        slider.value = 1.0F
+        slider.addOnChangeListener { slider, value, fromUser ->
+            tv_bsbf.text = "变速播放：" + ScreenUtils.getFloatNoMoreThanOneDigits(value).toString()
         }
-        cb_slider.onCheckedChange { buttonView, isChecked ->  if (isChecked)slider.value= 1.0F }
+        cb_slider.onCheckedChange { buttonView, isChecked -> if (isChecked)slider.value = 1.0F }
         slider?.setOnTouchListener(this)
-        cb_simple.onCheckedChange { buttonView, isChecked ->  if (isChecked) simpleFile= true
-            mCallback.callAct(slider.value,true,cb_dir.isChecked) }
-        cb_dir.onCheckedChange { buttonView, isChecked ->  if (isChecked)allFile= true
-            mCallback.callAct(slider.value,cb_simple.isChecked,true)}
+        cb_simple.onCheckedChange { buttonView, isChecked ->
+            if (isChecked) simpleFile = true
+            mCallback.callAct(slider.value, true, cb_dir.isChecked)
+        }
+        cb_dir.onCheckedChange { buttonView, isChecked ->
+            if (isChecked)allFile = true
+            mCallback.callAct(slider.value, cb_simple.isChecked, true)
+        }
 
-        option1.onCheckedChange { buttonView, isChecked ->  }
-    }
-
-    /**
-     * 跳转到硬解码
-     *
-     * @param activity
-     */
-    fun goMediaCodec(activity: Activity?) {
-        //开启硬解码
-      /*  if (GSYVideoType.isMediaCodec()) {
-            //Debuger.printfLog("enable mediaCodec")
-            mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1)
-            mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 1)
-            mediaPlayer.setOption(
-                IjkMediaPlayer.OPT_CATEGORY_PLAYER,
-                "mediacodec-handle-resolution-change",
-                1
-            )
-        }*/
+        option1.onCheckedChange { buttonView, isChecked -> }
     }
 
     private fun initRadioGroup() {
-
-        //为了能够在一行显示两个radiobutton:获取屏幕的宽度
+        // 为了能够在一行显示两个radiobutton:获取屏幕的宽度
         val wm = requireContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         val point = Point()
         wm.getDefaultDisplay().getSize(point)
 
         val width = point.x
-        // 这里设置的是radio button的高度
-        // 这里设置的是radio button的高度
         val height: Int = dpToPx(requireContext(), 30)
 
         val params2 = option2.getLayoutParams() as LinearLayout.LayoutParams
@@ -163,31 +116,15 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
         option2.setLayoutParams(params2)
 
         val params4 = option4.getLayoutParams() as LinearLayout.LayoutParams
-        params4.setMargins(width / 2, -height, 0, 0)//设置view和父容器之间间矩
+        params4.setMargins(width / 2, -height, 0, 0) // 设置view和父容器之间间矩
         option4.setLayoutParams(params4)
-
-
-
-    }
-
-
-    /**
-     * 弹窗高度，默认为屏幕高度的四分之三
-     * 子类可重写该方法返回peekHeight
-     *
-     * @return height
-     */
-    protected fun getPeekHeight(): Int {
-        val peekHeight = resources.displayMetrics.heightPixels
-        //设置弹窗高度为屏幕高度的3/4
-        return peekHeight - peekHeight / 2
     }
 
     @Nullable
     override fun onCreateView(
         inflater: LayoutInflater,
         @Nullable container: ViewGroup?,
-        @Nullable savedInstanceState: Bundle?
+        @Nullable savedInstanceState: Bundle?,
     ): View? {
         mContext = context
         view = inflater.inflate(R.layout.fragment_base_pager, container, false)
@@ -195,35 +132,27 @@ class SettingBottomSheetFragment : BottomSheetDialogFragment() , View.OnTouchLis
         return view
     }
 
-
-
     companion object {
         val instance: SettingBottomSheetFragment
             get() = SettingBottomSheetFragment()
     }
 
-
-    //该方法用于dp To px
+    // 该方法用于dp To px
     public fun dpToPx(context: Context, dp: Int): Int {
         val density: Float
         density = context.resources
             .displayMetrics.density
         return Math.round(dp.toFloat() * density)
     }
-    
 
     override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
         val action = p1?.getAction()
 
         if (action == MotionEvent.ACTION_UP) {
-
-            mCallback.callAct(slider.value,simpleFile,allFile)
+            mCallback.callAct(slider.value, simpleFile, allFile)
         }
 
         // 返回false表示不消费该事件，继续传递给其他监听器处理
         return false
-
     }
-
-
 }

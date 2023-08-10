@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal"
-            android:weightSum="6"
+            android:weightSum="4"
             android:background="@color/theme_black_7f">
 
             <ImageView
@@ -38,6 +38,7 @@
                 style="@style/title_player"
                 android:textColor="#fff"
                 android:visibility="visible"
+                android:text="视频名称"
                 android:textSize="13sp"/>
 
             <ImageView
@@ -52,7 +53,7 @@
             <ImageView
                 android:id="@+id/iv_cut"
                 style="@style/title_player"
-                android:layout_height="29dp"
+                android:layout_height="25dp"
                 android:onClick="onClickCut"
                 android:src="@mipmap/cut"
                 android:textSize="20sp" />
@@ -62,13 +63,15 @@
                 style="@style/title_player"
                 android:text="DLAN"
                 android:textColor="#fff"
+                android:visibility="gone"
                 android:textSize="20sp"/>
 
             <ImageView
                 android:id="@+id/iv_lock"
                 style="@style/title_player"
-                android:layout_height="27dp"
+                android:layout_height="25dp"
                 android:src="@mipmap/unlock"
+                android:visibility="gone"
                 tools:ignore="ImageContrastCheck" />
 
 
@@ -85,7 +88,6 @@
                 style="@style/title_player"
                 android:text="默认比例"
                 android:onClick="onClickMoreScale"
-                android:minEms="5"
                 android:textColor="#fff"
                 android:textSize="20sp" />
         </LinearLayout>

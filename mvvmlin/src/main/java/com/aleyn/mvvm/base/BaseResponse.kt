@@ -1,17 +1,15 @@
 package com.aleyn.mvvm.base
 
-import com.aleyn.mvvm.base.IBaseResponse
-
 /**
  *  author : jiangxue
  *  date : 2023/6/16 13:53
  *  description :
  */
- data class BaseResponse<T>(
+data class BaseResponse<T>(
     val errorMsg: String,
     val errorCode: Int,
-    val data: T
- ) : IBaseResponse<T> {
+    val data: T,
+) : IBaseResponse<T> {
 
     override fun code() = errorCode
 
@@ -20,5 +18,4 @@ import com.aleyn.mvvm.base.IBaseResponse
     override fun data() = data
 
     override fun isSuccess() = errorCode == 0
-
 }

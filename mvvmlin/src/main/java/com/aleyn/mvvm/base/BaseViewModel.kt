@@ -48,7 +48,7 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
             defUI.toastEvent.postValue("${it.code}:${it.errMsg}")
         },
         complete: suspend CoroutineScope.() -> Unit = {},
-        isShowDialog: Boolean = true
+        isShowDialog: Boolean = true,
     ) {
         if (isShowDialog) defUI.showDialog.call()
         launchUI {
@@ -58,7 +58,7 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
                 {
                     defUI.dismissDialog.call()
                     complete()
-                }
+                },
             )
         }
     }
@@ -78,7 +78,7 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
             defUI.toastEvent.postValue("${it.code}:${it.errMsg}")
         },
         complete: () -> Unit = {},
-        isShowDialog: Boolean = true
+        isShowDialog: Boolean = true,
     ) {
         if (isShowDialog) defUI.showDialog.call()
         launchUI {
@@ -86,8 +86,11 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
                 {
                     withContext(Dispatchers.IO) {
                         block().let {
-                            if (it.isSuccess()) it.data()
-                            else throw ResponseThrowable(it.code(), it.msg())
+                            if (it.isSuccess()) {
+                                it.data()
+                            } else {
+                                throw ResponseThrowable(it.code(), it.msg())
+                            }
                         }
                     }.also { success(it) }
                 },
@@ -95,11 +98,10 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
                 {
                     defUI.dismissDialog.call()
                     complete()
-                }
+                },
             )
         }
     }
-
 
     /**
      * 异常统一处理
@@ -107,7 +109,7 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
     private suspend fun handleException(
         block: suspend CoroutineScope.() -> Unit,
         error: suspend CoroutineScope.(ResponseThrowable) -> Unit,
-        complete: suspend CoroutineScope.() -> Unit
+        complete: suspend CoroutineScope.() -> Unit,
     ) {
         coroutineScope {
             try {
@@ -119,7 +121,6 @@ open class BaseViewModel : AndroidViewModel(Utils.getApp()), LifecycleObserver {
             }
         }
     }
-
 
     /**
      * UI事件

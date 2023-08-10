@@ -18,11 +18,12 @@ abstract class BaseModel {
         remoto: suspend () -> IBaseResponse<T>,
         local: suspend () -> T?,
         save: suspend (T) -> Unit,
-        isUseCache: (T?) -> Boolean = { true }
+        isUseCache: (T?) -> Boolean = { true },
     ): T {
         val localData = local.invoke()
-        if (isUseCache(localData)) return localData!!
-        else {
+        if (isUseCache(localData)) {
+            return localData!!
+        } else {
             val net = remoto()
             if (net.isSuccess()) {
                 return net.data()!!.also { save(it) }

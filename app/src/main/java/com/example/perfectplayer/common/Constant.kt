@@ -11,6 +11,5 @@ class Constant {
         const val one = "TagOneParam"
         const val KEY_ITEM_INDEX = "item_index"
         const val KEY_POSITION = "position"
-
     }
 }

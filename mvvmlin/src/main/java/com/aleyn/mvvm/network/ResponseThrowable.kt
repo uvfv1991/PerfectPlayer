@@ -25,4 +25,3 @@ class ResponseThrowable : Exception {
         this.errMsg = base.msg()
     }
 }
-

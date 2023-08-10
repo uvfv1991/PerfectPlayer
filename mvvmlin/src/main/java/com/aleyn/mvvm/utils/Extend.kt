@@ -13,7 +13,10 @@ fun <T> Flow<IBaseResponse<T>>.applyTransform(): Flow<T> {
     return this
         .flowOn(Dispatchers.IO)
         .map {
-            if (it.isSuccess()) return@map it.data()
-            else throw ResponseThrowable(it.code(), it.msg())
+            if (it.isSuccess()) {
+                return@map it.data()
+            } else {
+                throw ResponseThrowable(it.code(), it.msg())
+            }
         }
 }

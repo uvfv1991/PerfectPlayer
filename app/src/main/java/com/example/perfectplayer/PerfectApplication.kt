@@ -15,5 +15,4 @@ class PerfectApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
     }
-
 }

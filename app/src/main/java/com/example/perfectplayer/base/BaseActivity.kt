@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.EventBus
  *  date : 2023/8/1 14:52
  *  description :
  */
-open class BaseActivity:AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()

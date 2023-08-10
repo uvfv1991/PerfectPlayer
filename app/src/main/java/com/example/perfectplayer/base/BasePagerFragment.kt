@@ -1,15 +1,10 @@
 package com.example.perfectplayer.base
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aleyn.mvvm.base.BaseFragment
 import com.aleyn.mvvm.base.BaseViewModel
-import com.example.perfectplayer.R
 import com.example.perfectplayer.adapter.BaseFragmentPagerAdapter
 import com.example.perfectplayer.databinding.FragmentBasePagerBinding
-import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 
 /**
  *  author : jiangxue
@@ -17,7 +12,7 @@ import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
  *  description :
  */
 abstract class BasePagerFragment :
-    BaseFragment<BaseViewModel,FragmentBasePagerBinding>() {
+    BaseFragment<BaseViewModel, FragmentBasePagerBinding>() {
     private var mFragments: List<Fragment>? = null
     private var titlePager: List<String>? = null
     protected abstract fun pagerFragment(): List<Fragment>?
@@ -26,9 +21,8 @@ abstract class BasePagerFragment :
     override fun initData() {
         mFragments = pagerFragment()
         titlePager = pagerTitleString()
-        //设置Adapter
+        // 设置Adapter
         val pagerAdapter =
             BaseFragmentPagerAdapter(getChildFragmentManager(), mFragments, titlePager)
     }
-
 }

@@ -13,8 +13,10 @@ open class BaseApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        MVVMLin.install(GlobalConfig().apply {
-            viewModelFactory = ViewModelFactory()
-        })
+        MVVMLin.install(
+            GlobalConfig().apply {
+                viewModelFactory = ViewModelFactory()
+            },
+        )
     }
 }

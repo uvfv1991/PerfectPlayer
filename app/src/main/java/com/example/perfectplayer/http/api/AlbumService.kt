@@ -9,7 +9,6 @@ import retrofit2.http.Url
 
 interface AlbumService {
 
-
     /**
      * 获取首页文章列表数据
      *
@@ -17,7 +16,7 @@ interface AlbumService {
      * @return 文章列表数据
      */
     @GET("article/list/{pageNum}/json")
-    suspend fun  getArticleListData(@Path("pageNum") pageNum: Int): BaseResponse<Album>
+    suspend fun getArticleListData(@Path("pageNum") pageNum: Int): BaseResponse<Album>
 
     /**
      * 获取首页Banner数据
@@ -25,8 +24,8 @@ interface AlbumService {
      * @return Banner数据
      */
     @GET("banner/json")
-    suspend fun  getBannerData(): BaseResponse<ArrayList<Album>>
+    suspend fun getBannerData(): BaseResponse<ArrayList<Album>>
 
     @GET()
-    fun getCommentData(@Url path:String):Call<Any>
+    fun getCommentData(@Url path: String): Call<Any>
 }

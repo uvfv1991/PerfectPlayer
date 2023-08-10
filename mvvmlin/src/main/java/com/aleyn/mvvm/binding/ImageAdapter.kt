@@ -18,7 +18,5 @@ object ImageAdapter {
             .load(url)
             .apply(RequestOptions().placeholder(placeholder))
             .into(imageView)
-
     }
-
 }

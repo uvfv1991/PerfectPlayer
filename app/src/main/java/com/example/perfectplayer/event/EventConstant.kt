@@ -8,8 +8,7 @@ package com.example.perfectplayer.event
 class EventConstant {
 
     companion object {
-        const val one = "TagOneParam"//取消弹出框
-        const val cod = 2//取消弹出框
-
+        const val one = "TagOneParam" // 取消弹出框
+        const val cod = 2 // 取消弹出框
     }
 }

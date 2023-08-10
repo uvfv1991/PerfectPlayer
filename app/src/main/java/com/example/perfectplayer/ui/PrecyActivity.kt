@@ -15,7 +15,6 @@ import com.blankj.utilcode.util.ResourceUtils
 import com.example.perfectplayer.MainActivity
 import com.example.perfectplayer.R
 import com.example.perfectplayer.databinding.ActivityPracyBinding
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 
 class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
@@ -23,9 +22,8 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
     var dialog: Dialog? = null
 
     fun onClickAgree(v: View?) {
-
         dialog!!.dismiss()
-        //下面将已阅读标志写入文件，再次启动的时候判断是否显示。
+        // 下面将已阅读标志写入文件，再次启动的时候判断是否显示。
         getSharedPreferences("file", Context.MODE_PRIVATE).edit()
             .putBoolean("agree", true)
             .apply()
@@ -33,15 +31,12 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
         startActivity(intent)
         finish()*/
 
-
         startActivity<MainActivity>()
         finish()
     }
 
-
-
     fun showPrivacy(privacyFileName: String?) {
-        val str =  ResourceUtils.readAssets2String(privacyFileName)
+        val str = ResourceUtils.readAssets2String(privacyFileName)
         val inflate: View =
             LayoutInflater.from(this).inflate(R.layout.dialog_privacy_show, null)
         val tv_title = inflate.findViewById<View>(R.id.tv_title) as TextView
@@ -57,16 +52,15 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
         windowManager.defaultDisplay.getMetrics(dm)
         val params = (dialog as AlertDialog?)?.window?.attributes
         if (params != null) {
-            params.width  = dm.widthPixels * 4 / 5
+            params.width = dm.widthPixels * 4 / 5
             params.height = dm.heightPixels * 1 / 2
         }
-        (dialog as AlertDialog?)?.setCancelable(false) //屏蔽返回键
-        (dialog as AlertDialog?)?.window?.attributes  = params
+        (dialog as AlertDialog?)?.setCancelable(false) // 屏蔽返回键
+        (dialog as AlertDialog?)?.window?.attributes = params
         // (dialog as AlertDialog?)?.window?.setBackgroundDrawableResource(R.color.transparent)
-
     }
 
-    //隐私检查
+    // 隐私检查
     fun PravicyCheck() {
         val status =
             getSharedPreferences("file", Context.MODE_PRIVATE)
@@ -78,11 +72,10 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
         } else {
             showPrivacy("privacy.txt")
         }
-
     }
 
     override fun layoutId(): Int {
-        return  R.layout.activity_pracy
+        return R.layout.activity_pracy
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -92,4 +85,3 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
     override fun initData() {
     }
 }
-

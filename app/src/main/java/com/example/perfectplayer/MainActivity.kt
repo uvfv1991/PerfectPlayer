@@ -4,7 +4,6 @@ import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -17,22 +16,19 @@ import com.permissionx.guolindev.PermissionX
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.toast
 
-
-class MainActivity : BaseActivity(){
+class MainActivity : BaseActivity() {
     private var lastTime: Long = 0
-    private var tag: String ="album"
+    private var tag: String = "album"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         initView()
     }
 
     private fun initView() {
-
-        supportFragmentManager.beginTransaction().replace(R.id.container, AlbumFragment(),tag).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, AlbumFragment(), tag).commit()
     }
 
     override fun onStart() {
@@ -52,7 +48,6 @@ class MainActivity : BaseActivity(){
         } else {
             lastTime = currentTime
         }
-
     }
 
     public fun doubleClickExit() {
@@ -73,7 +68,7 @@ class MainActivity : BaseActivity(){
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.RECORD_AUDIO
+                Manifest.permission.RECORD_AUDIO,
             )
             .onExplainRequestReason { scope, deniedList ->
                 val message = "PerfectPlayer需要您同意以下权限才能正常使用"
@@ -88,28 +83,22 @@ class MainActivity : BaseActivity(){
             }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun doCancelBottom() {
-
-
     }
 
-    @BusUtils.Bus(tag = Constant.one )
-     public fun noParamFun(param:Int) {
-
+    @BusUtils.Bus(tag = Constant.one)
+    public fun noParamFun(param: Int) {
     }
 
     @Subscribe
     fun onEvent(event: MessageEvent) {
-        when(event.getType()){
-
+        when (event.getType()) {
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -119,6 +108,4 @@ class MainActivity : BaseActivity(){
 
         return ra.onKeyDown(keyCode, event!!)
     }
-
-
 }

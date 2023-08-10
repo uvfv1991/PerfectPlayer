@@ -19,7 +19,7 @@ class DefaultPrinter(private val logger: LoggingInterceptor.Logger = LoggingInte
      */
     override fun printJsonRequest(
         request: Request?,
-        bodyString: String?
+        bodyString: String?,
     ) {
         val requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString
         val tag = getTag(true)
@@ -63,11 +63,14 @@ class DefaultPrinter(private val logger: LoggingInterceptor.Logger = LoggingInte
         bodyString: String?,
         segments: List<String?>?,
         message: String?,
-        responseUrl: String?
+        responseUrl: String?,
     ) {
         var tempString = bodyString
-        tempString = if (LoggingInterceptor.isJson(contentType)) JsonUtils.formatJson(tempString)
-        else tempString
+        tempString = if (LoggingInterceptor.isJson(contentType)) {
+            JsonUtils.formatJson(tempString)
+        } else {
+            tempString
+        }
         val responseBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + tempString
         val tag = getTag(false)
         val urlLine = arrayOf(URL_TAG + responseUrl, N)
@@ -95,7 +98,7 @@ class DefaultPrinter(private val logger: LoggingInterceptor.Logger = LoggingInte
         headers: String?,
         segments: List<String?>?,
         message: String?,
-        responseUrl: String?
+        responseUrl: String?,
     ) {
         val tag = getTag(false)
         val urlLine = arrayOf(URL_TAG + responseUrl, N)
@@ -112,11 +115,11 @@ class DefaultPrinter(private val logger: LoggingInterceptor.Logger = LoggingInte
             LINE_SEPARATOR + LINE_SEPARATOR
         private val OMITTED_RESPONSE = arrayOf(
             LINE_SEPARATOR,
-            "Omitted response body"
+            "Omitted response body",
         )
         private val OMITTED_REQUEST = arrayOf(
             LINE_SEPARATOR,
-            "Omitted request body"
+            "Omitted request body",
         )
         private const val N = "\n"
         private const val T = "\t"
@@ -138,7 +141,7 @@ class DefaultPrinter(private val logger: LoggingInterceptor.Logger = LoggingInte
         private const val DEFAULT_LINE = "│ "
         private fun isEmpty(line: String?): Boolean {
             return TextUtils.isEmpty(line) || N == line || T == line || TextUtils.isEmpty(
-                line!!.trim { it <= ' ' }
+                line!!.trim { it <= ' ' },
             )
         }
     }
@@ -166,26 +169,39 @@ class DefaultPrinter(private val logger: LoggingInterceptor.Logger = LoggingInte
     private fun getRequest(request: Request?): Array<String> {
         val log: String
         val header = request!!.headers().toString()
-        log = METHOD_TAG + request.method() + DOUBLE_SEPARATOR + if (isEmpty(header)) ""
-        else HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header)
+        log = METHOD_TAG + request.method() + DOUBLE_SEPARATOR + if (isEmpty(header)) {
+            ""
+        } else {
+            HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header)
+        }
         return log.split(LINE_SEPARATOR.toRegex()).toTypedArray()
     }
 
     private fun getResponse(
-        header: String?, tookMs: Long, code: Int, isSuccessful: Boolean,
-        segments: List<String?>?, message: String?
+        header: String?,
+        tookMs: Long,
+        code: Int,
+        isSuccessful: Boolean,
+        segments: List<String?>?,
+        message: String?,
     ): Array<String> {
         val log: String
         val segmentString =
             slashSegments(segments)
         log =
-            ((if (!TextUtils.isEmpty(segmentString)) "$segmentString - " else "") + "is success : "
-                    + isSuccessful + " - " + RECEIVED_TAG + tookMs + "ms" + DOUBLE_SEPARATOR + STATUS_CODE_TAG +
+            (
+                (if (!TextUtils.isEmpty(segmentString)) "$segmentString - " else "") + "is success : " +
+                    isSuccessful + " - " + RECEIVED_TAG + tookMs + "ms" + DOUBLE_SEPARATOR + STATUS_CODE_TAG +
                     code + " / " + message + DOUBLE_SEPARATOR + if (isEmpty(
-                    header
+                            header,
+                        )
+                    ) {
+                        ""
+                    } else {
+                        HEADERS_TAG + LINE_SEPARATOR +
+                            dotHeaders(header)
+                    }
                 )
-            ) "" else HEADERS_TAG + LINE_SEPARATOR +
-                    dotHeaders(header))
         return log.split(LINE_SEPARATOR.toRegex()).toTypedArray()
     }
 

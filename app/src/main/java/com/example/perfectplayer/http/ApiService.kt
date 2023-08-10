@@ -4,7 +4,6 @@ import android.database.Observable
 import android.provider.MediaStore.Audio.Albums
 import com.aleyn.mvvm.base.BaseResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Url
 
 /**
@@ -22,6 +21,7 @@ open interface ApiService {
      */
     @GET("banner/json")
     fun getBannerData(): Observable<BaseResponse<List<Albums>>>
+
     /**
      * 获取导航列表数据
      *
@@ -29,5 +29,4 @@ open interface ApiService {
      */
     @GET
     fun getDiscoverData(@Url path: String): Observable<Any>
-
 }

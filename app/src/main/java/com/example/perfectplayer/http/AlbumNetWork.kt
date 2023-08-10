@@ -17,7 +17,7 @@ class AlbumNetWork {
 
     private val service = ServiceCreator.create(AlbumService::class.java)
 
-    //首页数据  await()在kotlin中是一个挂起函数，他会等待结果返回才继续执行之后的代
+    // 首页数据  await()在kotlin中是一个挂起函数，他会等待结果返回才继续执行之后的代
     suspend fun requestArticle(pageNum: Int) = service.getArticleListData(pageNum)
 
     suspend fun requestComment(url: String) = service.getCommentData(url).await()
@@ -31,13 +31,15 @@ class AlbumNetWork {
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
-                    if (body != null) continuation.resume(body)
-                    else continuation.resumeWithException(RuntimeException("response body is null"))
+                    if (body != null) {
+                        continuation.resume(body)
+                    } else {
+                        continuation.resumeWithException(RuntimeException("response body is null"))
+                    }
                 }
             })
         }
     }
-
 
     companion object {
         @Volatile
@@ -47,8 +49,4 @@ class AlbumNetWork {
             netWork ?: AlbumNetWork().also { netWork = it }
         }
     }
-
 }
-
-
-

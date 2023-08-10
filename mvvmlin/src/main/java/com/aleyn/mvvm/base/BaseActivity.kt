@@ -1,7 +1,6 @@
 package com.aleyn.mvvm.base
 
 import android.os.Bundle
-import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -31,7 +30,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
         super.onCreate(savedInstanceState)
         initViewDataBinding()
         lifecycle.addObserver(viewModel)
-        //注册 UI事件
+        // 注册 UI事件
         registorDefUIChange()
         initView(savedInstanceState)
         initData()
@@ -40,7 +39,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     abstract fun layoutId(): Int
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()
-
 
     /**
      * DataBinding
@@ -51,27 +49,40 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
         if (ViewDataBinding::class.java != cls && ViewDataBinding::class.java.isAssignableFrom(cls)) {
             mBinding = DataBindingUtil.setContentView(this, layoutId())
             mBinding?.lifecycleOwner = this
-        } else setContentView(layoutId())
+        } else {
+            setContentView(layoutId())
+        }
         createViewModel()
     }
-
 
     /**
      * 注册 UI 事件
      */
     private fun registorDefUIChange() {
-        viewModel.defUI.showDialog.observe(this, Observer {
-            showLoading()
-        })
-        viewModel.defUI.dismissDialog.observe(this, Observer {
-            dismissLoading()
-        })
-        viewModel.defUI.toastEvent.observe(this, Observer {
-            ToastUtils.showShort(it)
-        })
-        viewModel.defUI.msgEvent.observe(this, Observer {
-            handleEvent(it)
-        })
+        viewModel.defUI.showDialog.observe(
+            this,
+            Observer {
+                showLoading()
+            },
+        )
+        viewModel.defUI.dismissDialog.observe(
+            this,
+            Observer {
+                dismissLoading()
+            },
+        )
+        viewModel.defUI.toastEvent.observe(
+            this,
+            Observer {
+                ToastUtils.showShort(it)
+            },
+        )
+        viewModel.defUI.msgEvent.observe(
+            this,
+            Observer {
+                handleEvent(it)
+            },
+        )
     }
 
     open fun handleEvent(msg: Message) {}
@@ -89,7 +100,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
                 .maxWidth(R.dimen.dialog_width)
         }
         dialog?.show()
-
     }
 
     /**
@@ -98,7 +108,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     private fun dismissLoading() {
         dialog?.run { if (isShowing) dismiss() }
     }
-
 
     /**
      * 创建 ViewModel
@@ -112,5 +121,4 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
             viewModel = ViewModelProvider(this, ViewModelFactory()).get(tClass) as VM
         }
     }
-
 }

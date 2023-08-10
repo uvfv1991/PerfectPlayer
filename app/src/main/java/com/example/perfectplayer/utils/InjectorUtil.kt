@@ -9,8 +9,6 @@ import com.example.perfectplayer.http.repository.AlbumRepository
  *  description :仓库注入工具
  */
 object InjectorUtil {
-    //相册视频
+    // 相册视频
     fun getAlbumRepository() = AlbumRepository.getInstance(AlbumNetWork.getInstance())
-
-
 }

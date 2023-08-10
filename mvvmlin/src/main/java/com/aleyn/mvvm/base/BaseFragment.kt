@@ -29,16 +29,15 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
 
     protected var mBinding: DB? = null
 
-    //是否第一次加载
+    // 是否第一次加载
     private var isFirst: Boolean = true
 
     private var dialog: MaterialDialog? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val cls =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<*>
@@ -56,9 +55,9 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         onVisible()
         createViewModel()
         lifecycle.addObserver(viewModel)
-        //注册 UI事件
+        // 注册 UI事件
         registorDefUIChange()
-        //页面数据初始化方法
+        // 页面数据初始化方法
         initData()
         initView(savedInstanceState)
     }
@@ -100,18 +99,30 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
      * 注册 UI 事件
      */
     private fun registorDefUIChange() {
-        viewModel.defUI.showDialog.observe(viewLifecycleOwner, Observer {
-            showLoading()
-        })
-        viewModel.defUI.dismissDialog.observe(viewLifecycleOwner, Observer {
-            dismissLoading()
-        })
-        viewModel.defUI.toastEvent.observe(viewLifecycleOwner, Observer {
-            ToastUtils.showShort(it)
-        })
-        viewModel.defUI.msgEvent.observe(viewLifecycleOwner, Observer {
-            handleEvent(it)
-        })
+        viewModel.defUI.showDialog.observe(
+            viewLifecycleOwner,
+            Observer {
+                showLoading()
+            },
+        )
+        viewModel.defUI.dismissDialog.observe(
+            viewLifecycleOwner,
+            Observer {
+                dismissLoading()
+            },
+        )
+        viewModel.defUI.toastEvent.observe(
+            viewLifecycleOwner,
+            Observer {
+                ToastUtils.showShort(it)
+            },
+        )
+        viewModel.defUI.msgEvent.observe(
+            viewLifecycleOwner,
+            Observer {
+                handleEvent(it)
+            },
+        )
     }
 
     open fun handleEvent(msg: Message) {}
@@ -155,6 +166,4 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
             viewModel = ViewModelProvider(viewModelStore, ViewModelFactory()).get(tClass) as VM
         }
     }
-
-
 }

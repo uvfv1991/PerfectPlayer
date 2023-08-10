@@ -9,5 +9,5 @@ class Message @JvmOverloads constructor(
     var msg: String = "",
     var arg1: Int = 0,
     var arg2: Int = 0,
-    var obj: Any? = null
+    var obj: Any? = null,
 )
