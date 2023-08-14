@@ -11,4 +11,80 @@
         android:title="history"
         android:icon="@mipmap/history"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/duoxuan"
+        android:title="多选"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search"
+        android:title="搜索"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search"
+        android:title="搜索"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/wzbf"
+        android:title="网址播放"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/jywsb"
+        android:title="局域网设备"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/llqck"
+        android:title="浏览存储卡"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/paixu"
+        android:title="排序"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/listshow"
+        android:title="视频列表显示"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/smsp"
+        android:title="私密视频"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/spjt"
+        android:title="视频截图"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/wxglwj"
+        android:title="无线管理文件"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/setting"
+        android:title="设置"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/info"
+        android:title="个人信息收集清单"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/dsf"
+        android:title="第三方信息共享清单"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/qxsyqd"
+        android:title="权限使用清单"
+        app:showAsAction="ifRoom" />
+
 </menu>

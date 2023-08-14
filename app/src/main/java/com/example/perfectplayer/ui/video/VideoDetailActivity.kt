@@ -12,41 +12,39 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import androidx.media3.common.C
-import androidx.media3.common.MediaItem
-import androidx.media3.common.PlaybackException
-import androidx.media3.common.PlaybackParameters
-import androidx.media3.common.Player
-import androidx.media3.common.Player.REPEAT_MODE_ALL
-import androidx.media3.common.Player.REPEAT_MODE_ONE
-import androidx.media3.common.VideoSize
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.PlayerView
 import com.aleyn.mvvm.base.BaseActivity
-import com.aleyn.mvvm.base.NoViewModel
 import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.example.perfectplayer.R
 import com.example.perfectplayer.common.Constant.Companion.KEY_ITEM_INDEX
 import com.example.perfectplayer.common.Constant.Companion.KEY_POSITION
 import com.example.perfectplayer.data.Video
 import com.example.perfectplayer.databinding.ActivityVideoDetailBinding
 import com.example.perfectplayer.manager.IFragmentCallback
+import com.example.perfectplayer.ui.album.AlbumFragment
 import com.example.perfectplayer.ui.album.SettingFragment.SettingBottomSheetFragment
+import com.example.perfectplayer.ui.video.VideoDetailModel
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.Player.REPEAT_MODE_ALL
+import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
+import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import kotlinx.android.synthetic.main.activity_video_detail.playerView
 import kotlinx.android.synthetic.main.activity_video_detail.titleText
-import kotlinx.android.synthetic.main.activity_video_detail.tv_moreScale
+import kotlinx.android.synthetic.main.activity_video_detail.tv_time
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.toast
-import java.util.Formatter
-import java.util.Locale
+import java.text.SimpleDateFormat
 
 class VideoDetailActivity :
-    BaseActivity<NoViewModel, ActivityVideoDetailBinding>(),
-    PlayerView.ControllerVisibilityListener,
+    BaseActivity<VideoDetailModel, ActivityVideoDetailBinding>(),
     IFragmentCallback {
-    protected final var TAG: String = "VideoDetailActivity"
-    private var isPlaying = false
+
     var player: ExoPlayer? = null
     lateinit var video: Video
     var pos: Int = 0
@@ -60,10 +58,9 @@ class VideoDetailActivity :
 
     override fun initView(savedInstanceState: Bundle?) {
         var intent = intent
-        // video = intent.getSerializableExtra("detail") as Video
         pos = intent.getIntExtra("position", 0)
         dataList = intent.getSerializableExtra("folder") as ArrayList<Video>
-        Log.e(TAG, "url" + dataList.get(pos).path)
+        tv_time.text = viewModel.getTime()
         initPlayer()
     }
 
@@ -78,17 +75,14 @@ class VideoDetailActivity :
             player = ExoPlayer.Builder(this).build()
 
             playerView.player = player
-            val mediaItems = createMediaItems()
 
-            if (mediaItems == null || mediaItems.isEmpty()) {
-                return
-            }
-            player!!.setMediaItems(mediaItems, /* resetPosition= */false)
+            player!!.setMediaItem(MediaItem.fromUri(dataList.get(pos).path.toString()))
             player?.prepare()
+            player?.repeatMode = REPEAT_MODE_OFF
         }
 
         // Play from the item selected on the playlist from previous activity/fragment
-        player?.seekTo(pos, C.TIME_UNSET)
+        // player?.seekTo(pos, C.TIME_UNSET)
         player?.addListener(PlayerEventListener())
         player?.playWhenReady = true
     }
@@ -97,18 +91,6 @@ class VideoDetailActivity :
     其中H264 是目前比较常见的编码方式。
 
     * 视频编码的存在，视频编码的作用就是对传输图片进行压缩，从而达到尽量还原画面的同时，得到更小的体积。*/
-
-    // 是否支持软解
-    fun isSoftwareCodec(codecName: String): Boolean {
-        if (codecName.startsWith("OMX.google.")) {
-            return true
-        }
-        return if (codecName.startsWith("OMX.")) {
-            false
-        } else {
-            true
-        }
-    }
 
     fun onClickSetting(v: View?) {
         // 打开设置
@@ -127,43 +109,18 @@ class VideoDetailActivity :
     }
     private var isFullscreen = false
 
-    // 是否播放过
-    protected var mHadPlay = false
-
-    // 记住切换数据源类型
-    private var mType = 0
-
     // 切换清晰度
     fun onClickMoreScale(v: View?) {
-        when (mType) {
-            0 -> mType = 1
-            1 -> mType = 2
-        }
-        resolveTypeUI()
-    }
-
-    private fun showLock() {
-        // playerView.hideController()
-
-        // playerView.showController()
-    }
-
-    private fun resolveTypeUI() {
-        when (mType) {
-            1 -> {
-                tv_moreScale.setText("全屏")
-                isFullscreen = true
-            }
-
-            2 -> {
-                tv_moreScale.setText("默认比例")
-                isFullscreen = false
-            }
-        }
         toggleFullscreen()
     }
+
     override fun initData() {
         initListener()
+    }
+
+    // 切换引擎
+    fun onClickYQ(v: View?) {
+        toast("如果遇到播放问题，可以在首页设置中切换到另一个引擎试试")
     }
 
     // 播放器监听
@@ -171,19 +128,16 @@ class VideoDetailActivity :
     }
 
     inner class PlayerEventListener : Player.Listener {
-
-        override fun onVideoSizeChanged(videoSize: VideoSize) {
-            super.onVideoSizeChanged(videoSize)
-            Log.e("video", "onVideoSizeChanged")
-        }
-        override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-            Log.e("video", "onPlayWhenReadyChanged")
-        }
         override fun onPlaybackStateChanged(playbackState: @Player.State Int) {
             Log.e("video", "onPlaybackStateChanged")
             when (playbackState) {
                 Player.STATE_ENDED -> {
                     Log.e("video", "播放完成")
+                    val video = dataList.get(pos)
+                    video.type = AlbumFragment.TYPE_History
+                    var format = SimpleDateFormat("HH:mm")
+                    video.date = TimeUtils.getNowString(format)
+                    viewModel.saveHistory(video)
                 } // 可以被播放状态}//播放结束
                 Player.STATE_BUFFERING -> {} // 正在缓冲
                 Player.STATE_IDLE -> {} // 空闲状态
@@ -193,19 +147,26 @@ class VideoDetailActivity :
             }
         }
 
+        override fun onRepeatModeChanged(repeatMode: Int) {
+            super.onRepeatModeChanged(repeatMode)
+            // 首次选择目录循环后添加列表文件
+            val mediaItems = createMediaItems()
+
+            if (mediaItems == null || mediaItems.isEmpty()) {
+                return
+            }
+            player!!.setMediaItems(mediaItems)
+        }
+
         override fun onPlayerError(error: PlaybackException) {
             if (error.errorCode == PlaybackException.ERROR_CODE_BEHIND_LIVE_WINDOW) {
                 player!!.seekToDefaultPosition()
                 player!!.prepare()
             } else {
-                // updateButtonVisibility()
-                // showControls()
             }
         }
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
             super.onMediaItemTransition(mediaItem, reason)
-            // Log.e("video", "2"+dataList.get(reason).videoName)
-            // titleText.text=dataList.get(reason).videoName
         }
 
         override fun onPositionDiscontinuity(
@@ -219,22 +180,6 @@ class VideoDetailActivity :
         }
     }
 
-    private fun stringForTime(timeMs: Int): String? {
-        val mFormatBuilder: StringBuilder
-        val mFormatter: Formatter
-        mFormatBuilder = StringBuilder()
-        mFormatter = Formatter(mFormatBuilder, Locale.getDefault())
-        val totalSeconds = timeMs / 1000
-        val seconds = totalSeconds % 60
-        val minutes = totalSeconds / 60 % 60
-        val hours = totalSeconds / 3600
-        mFormatBuilder.setLength(0)
-        return if (hours > 0) {
-            mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
-        } else {
-            mFormatter.format("%02d:%02d", minutes, seconds).toString()
-        }
-    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -279,8 +224,8 @@ class VideoDetailActivity :
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        if (newConfig.orientation === Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation === Configuration.ORIENTATION_PORTRAIT) {
-            titleText.text = dataList.get(pos).videoName
+        titleText.text = dataList.get(pos).videoName
+        if (newConfig.orientation === Configuration.ORIENTATION_LANDSCAPE) {
             titleText.visibility = View.VISIBLE
         } else {
             titleText.visibility = View.GONE
@@ -333,10 +278,6 @@ class VideoDetailActivity :
         releasePlayer()
     }
 
-    override fun onVisibilityChanged(visibility: Int) {
-        TODO("Not yet implemented")
-    }
-
     fun onClickMenuOrBack(v: View?) {
         finish()
     }
@@ -347,7 +288,7 @@ class VideoDetailActivity :
 
         if (dirFile)player?.repeatMode = REPEAT_MODE_ALL
 
-        player?.play()
+        // player?.play()
     }
 
     // 设置是滞全屏

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+        <CheckBox
+            android:id="@+id/cb_album"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <ImageView
+        android:id="@+id/im_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/dp_4"
+            android:src="@mipmap/history"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <TextView
+        android:id="@+id/tv_videoname"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="视频名称"
+        android:textColor="@color/font_black"
+        android:paddingLeft="@dimen/dp_10"
+        android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_videodata"
+            android:layout_width="152dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="查看时间"
+            android:textColor="@color/font_black"
+            android:textSize="18sp" />
+
+
+
+</LinearLayout>
+
+    <View
+        android:layout_below="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/font_losecoupon"
+        tools:ignore="MissingConstraints" />
+</RelativeLayout>

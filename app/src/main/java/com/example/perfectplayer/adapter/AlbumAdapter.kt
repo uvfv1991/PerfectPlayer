@@ -22,20 +22,26 @@ class AlbumAdapter(data: MutableList<Video>) :
         // 为不同类型添加不同的布局
         addItemType(Video.title, R.layout.adapter_video_title)
         addItemType(Video.list, R.layout.adapter_video_list)
-        addItemType(Video.list, R.layout.adapter_video_list)
+        addItemType(Video.history, R.layout.adapter_video_history_list)
     }
 
     override fun convert(holder: BaseViewHolder, item: Video) {
         val checkBox = holder.getView(R.id.cb_album) as CheckBox
-        val layout = holder.getView(R.id.ll) as LinearLayout
         when (holder.itemViewType) {
             AlbumFragment.TYPE_NO -> { // 获取标题
                 holder.setText(R.id.tv_albumname, item.folder)
-                holder.setText(R.id.tv_count, item.count.toString() + "个数")
+                holder.setText(R.id.tv_count, item.count.toString() + "视频")
             }
 
             AlbumFragment.TYPE_LIST -> { // 获取列表
                 holder.setText(R.id.tv_videoname, item.videoName)
+
+                ImageUtils.loadImage(holder.getView(R.id.im_icon), item.thumbPath.toString())
+            }
+
+            AlbumFragment.TYPE_History -> { // 获取播放历史列表
+                holder.setText(R.id.tv_videoname, item.videoName)
+                holder.setText(R.id.tv_videodata, item.date)
 
                 ImageUtils.loadImage(holder.getView(R.id.im_icon), item.thumbPath.toString())
             }

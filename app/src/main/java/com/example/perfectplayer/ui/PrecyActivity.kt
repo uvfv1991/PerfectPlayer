@@ -12,25 +12,23 @@ import android.widget.TextView
 import com.aleyn.mvvm.base.BaseActivity
 import com.aleyn.mvvm.base.NoViewModel
 import com.blankj.utilcode.util.ResourceUtils
+import com.bytedance.sdk.openadsdk.TTAdNative
 import com.example.perfectplayer.MainActivity
 import com.example.perfectplayer.R
 import com.example.perfectplayer.databinding.ActivityPracyBinding
+import com.example.perfectplayer.manager.TTAdManagerHolder
 import org.jetbrains.anko.startActivity
 
 class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
 
     var dialog: Dialog? = null
-
+    private var mTTAdNative: TTAdNative? = null
     fun onClickAgree(v: View?) {
         dialog!!.dismiss()
         // 下面将已阅读标志写入文件，再次启动的时候判断是否显示。
         getSharedPreferences("file", Context.MODE_PRIVATE).edit()
             .putBoolean("agree", true)
             .apply()
-     /*   val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()*/
-
         startActivity<MainActivity>()
         finish()
     }
@@ -79,6 +77,7 @@ class PrecyActivity : BaseActivity<NoViewModel, ActivityPracyBinding>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        mTTAdNative = TTAdManagerHolder.get().createAdNative(this);
         PravicyCheck()
     }
 

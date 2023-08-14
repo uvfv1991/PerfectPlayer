@@ -1,5 +1,6 @@
 package com.example.perfectplayer.utils
 
+import com.example.perfectplayer.base.PerfectPlayerDatabase
 import com.example.perfectplayer.http.AlbumNetWork
 import com.example.perfectplayer.http.repository.AlbumRepository
 
@@ -10,5 +11,6 @@ import com.example.perfectplayer.http.repository.AlbumRepository
  */
 object InjectorUtil {
     // 相册视频
-    fun getAlbumRepository() = AlbumRepository.getInstance(AlbumNetWork.getInstance())
+    fun getAlbumRepository() = AlbumRepository.getInstance(PerfectPlayerDatabase.getVideoDao(), AlbumNetWork.getInstance())
+    // fun getVideoDetailViewModelFactory() = VideoDetailViewModelFactory(getAlbumRepository())
 }

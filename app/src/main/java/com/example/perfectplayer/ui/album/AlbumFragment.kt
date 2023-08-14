@@ -35,7 +35,6 @@ import com.example.perfectplayer.data.Video
 import com.example.perfectplayer.event.MessageEvent
 import com.example.perfectplayer.utils.ToActivityHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import kotlinx.android.synthetic.main.fragment_album.checkall
 import kotlinx.android.synthetic.main.fragment_album.rl_notbottom
@@ -98,7 +97,7 @@ class AlbumFragment : BaseFragment<AlbumViewModel, ViewDataBinding>(), OnClickLi
             if (behavior?.state == BottomSheetBehavior.STATE_HIDDEN && type == 0) {
                 val mActivity = activity as MainActivity
                 mActivity.doubleClickExit()
-            } else if (type == 1) {
+            } else if (type == 1 || type == 2) {
                 viewModel.getTitle()
             }
         }
@@ -118,14 +117,13 @@ class AlbumFragment : BaseFragment<AlbumViewModel, ViewDataBinding>(), OnClickLi
                 when (it.itemId) {
                     R.id.menuhistory -> {
                         toast("历史记录")
+                        viewModel.getHistory()
                     }
                 }
                 false
             },
         )
     }
-
-
 
     private fun initRecycle() {
         albumAdapter = AlbumAdapter(viewModel.dataList)
@@ -158,6 +156,9 @@ class AlbumFragment : BaseFragment<AlbumViewModel, ViewDataBinding>(), OnClickLi
                             bundle,
                         )
                     }
+                    viewModel.currentType.value == TYPE_History -> {
+                        viewModel.getHistory()
+                    }
                 }
             }
         }
@@ -184,17 +185,23 @@ class AlbumFragment : BaseFragment<AlbumViewModel, ViewDataBinding>(), OnClickLi
                 hideRefreshAnimation()
                 when (type) {
                     TYPE_NO -> { // 获取标题
-                        albumAdapter?.setNewInstance(viewModel.dataList)
-                        rv_album.adapter = albumAdapter
+                        toolbar.title = "视频"
                         Companion.type = TYPE_NO.toInt()
                     }
                     TYPE_LIST -> { // 获取列表
+                        toolbar.title = viewModel.mfoldername
                         Companion.type = TYPE_LIST.toInt()
-                        albumAdapter?.setNewInstance(viewModel.dataList)
-                        rv_album.adapter = albumAdapter
-                        albumAdapter?.notifyDataSetChanged()
+                    }
+
+                    TYPE_History -> { // 历史列表
+                        toolbar.title = "历史记录"
+                        Companion.type = TYPE_History.toInt()
+                        // 隐藏图标
                     }
                 }
+                albumAdapter?.setNewInstance(viewModel.dataList)
+                rv_album.adapter = albumAdapter
+                albumAdapter?.notifyDataSetChanged()
             },
         )
 
@@ -263,6 +270,7 @@ class AlbumFragment : BaseFragment<AlbumViewModel, ViewDataBinding>(), OnClickLi
     companion object {
         const val TYPE_NO = 0
         const val TYPE_LIST = 1
+        const val TYPE_History = 2
         var type = 0
     }
 
@@ -289,7 +297,7 @@ class AlbumFragment : BaseFragment<AlbumViewModel, ViewDataBinding>(), OnClickLi
             if (behavior?.state == BottomSheetBehavior.STATE_HIDDEN && type == 0) {
                 val mActivity = activity as MainActivity
                 mActivity.doubleClickExit()
-            } else if (type == 1) {
+            } else if (type == 1 || type == 2) {
                 viewModel.getTitle()
             }
             true

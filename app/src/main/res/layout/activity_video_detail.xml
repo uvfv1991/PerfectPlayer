@@ -35,16 +35,17 @@
 
             <TextView
                 android:id="@+id/titleText"
-                style="@style/title_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textColor="#fff"
                 android:visibility="visible"
-                android:text="视频名称"
-                android:textSize="13sp"/>
+                android:textSize="12sp"/>
 
             <ImageView
                 android:id="@+id/iv_setting"
                 style="@style/title_player"
-                android:layout_height="31dp"
+                android:layout_height="25dp"
                 android:onClick="onClickSetting"
                 android:src="@mipmap/setting"
                 android:textSize="20sp"
@@ -56,7 +57,8 @@
                 android:layout_height="25dp"
                 android:onClick="onClickCut"
                 android:src="@mipmap/cut"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/tv_dlan"
@@ -76,29 +78,33 @@
 
 
             <ImageView
-                android:id="@+id/iv_rote"
+                android:id="@+id/iv_fully"
                 style="@style/title_player"
                 android:layout_height="26dp"
-                android:visibility="gone"
+                android:onClick="onClickMoreScale"
                 android:src="@mipmap/xz" />
 
 
             <TextView
-                android:id="@+id/tv_moreScale"
+                android:id="@+id/tv_time"
                 style="@style/title_player"
-                android:text="默认比例"
-                android:onClick="onClickMoreScale"
                 android:textColor="#fff"
-                android:textSize="20sp" />
+                android:textSize="18sp"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
-        <androidx.media3.ui.PlayerView
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/playerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_below="@id/rl"
-            app:surface_type="texture_view"
-            android:background="#000000"/>
+            android:background="#000000" />
+    <include layout="@layout/video_controll_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>
 
 </layout>

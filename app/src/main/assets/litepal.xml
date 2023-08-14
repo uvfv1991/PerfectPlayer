@@ -1,0 +1,21 @@
+<litepal>
+    <dbname value="perfectPlayer" />
+    <version value="1" />
+
+    <!--升级表
+    只要修改想改模型就行了
+    然后在配置文件litepal.xml中把<version value="x" />改为<version value="x+1" />就可以了-->
+    <list>
+        <mapping class="com.example.perfectplayer.data.Video" />
+    </list>
+    <!--
+        定义.db文件的位置。
+        "internal"表示.db文件将存储在内部存储的数据库文件夹中，没有人可以访问,默认设置。。
+        "external"表示.db文件将存储在主外部存储设备上的目录路径中，应用程序可以在该路径中放置它所拥有的每个人都可以访问的持久文件。
+        也可以自定义:
+        For example:
+        下面路径即为 /storage/emulated/0/routon/litePal/db/BookStore.db
+        -->
+
+    <storage value="external" />
+</litepal>

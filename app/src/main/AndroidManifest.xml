@@ -35,9 +35,9 @@
     <application
         android:allowBackup="true"
         android:name=".PerfectApplication"
-        android:icon="@mipmap/video"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -54,6 +54,16 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.kotlin.ui.VideoDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
+            android:authorities="${applicationId}.TTFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

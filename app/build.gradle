@@ -5,12 +5,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 31
+    ndkVersion "22.1.7171670"
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "com.example.perfectplayer"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -46,6 +47,15 @@ configurations.all {
         force 'androidx.core:core:1.6.0'
     }
 }
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url 'https://artifact.bytedance.com/repository/AwemeOpenSDK' }
+
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -56,7 +66,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
-    //implementation 'androidx.media3:media3-common:1.0.0-alpha03'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -72,28 +81,24 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
 
-   /* //exoplayer
+   //exoplayer
     implementation 'com.google.android.exoplayer:exoplayer-core:2.18.5'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.5'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.18.5'*/
-
-    implementation 'androidx.media3:media3-exoplayer:1.0.0-beta02'
-    implementation 'androidx.media3:media3-ui:1.0.0-beta02'
-
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.18.5'
+//litepal
+    implementation 'org.litepal.android:kotlin:3.0.0'
 
 //anko
     implementation "org.jetbrains.anko:anko:$anko_version"
 //eventbus
     implementation 'org.greenrobot:eventbus:3.3.1'
-    implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
-
-    //implementation 'com.github.rey5137:material:1.2.4'
-    //implementation 'com.google.android.material:material:1.6.1'
     implementation 'com.google.android.material:material:1.5.0-alpha02'
 
-    //viewmodle
-   /* implementation "androidx.activity:activity-ktx:1.2.2"
-    implementation "androidx.fragment:fragment-ktx:1.3.3"*/
-
+    implementation(name: 'open_ad_sdk', ext: 'aar')
+    implementation(name: 'tools-release', ext: 'aar')
+    implementation(name: 'circleimageview-2.2.0', ext: 'aar')
+    implementation(name: 'LayoutManagerGroup', ext: 'aar')
+    implementation "com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.8.0"
+    implementation "com.bytedance.ies.ugc.aweme:opensdk-common:0.1.8.0"
 }

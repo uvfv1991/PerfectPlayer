@@ -2,6 +2,7 @@ package com.example.perfectplayer.data
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.google.gson.annotations.SerializedName
+import org.litepal.crud.LitePalSupport
 import java.io.Serializable
 
 /**
@@ -20,7 +21,9 @@ class Video(
     @SerializedName("name") var videoName: String?,
     @SerializedName("count") var count: Int,
     @SerializedName("itemtype") var type: Int,
-) : MultiItemEntity, Serializable {
+    @SerializedName("playdate") var date: String?,
+) : LitePalSupport(), MultiItemEntity, Serializable {
+    @Transient val id = 0
     companion object {
         const val title = 0
         const val list = 1

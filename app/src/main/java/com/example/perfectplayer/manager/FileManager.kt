@@ -81,7 +81,7 @@ class FileManager {
                 // count显示的是第个文件夹下视频数量
                 val video = Video(
                     path, false, size, tp, false, folder, name, 0,
-                    AlbumFragment.TYPE_LIST,
+                    AlbumFragment.TYPE_LIST, null,
                 )
 
                 videos.add(video)
@@ -116,7 +116,7 @@ class FileManager {
                 var count = File(path).getParentFile().walk()
                     .maxDepth(1)
                     .filter { it.isFile }
-                    .filter { it.extension in listOf("mp4") }
+                    .filter { it.extension in listOf("mp4", "mp3", "avi") }
                     .toList().size
 
                 if (!FileUtils.isFileExists(path)) {
@@ -125,7 +125,7 @@ class FileManager {
                 // count显示的是第个文件夹下视频数量
                 val video = Video(
                     null, false, 0, null, false, folder, null, count,
-                    AlbumFragment.TYPE_NO,
+                    AlbumFragment.TYPE_NO, null,
                 )
 
                 videos.add(video)
