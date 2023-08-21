@@ -143,7 +143,7 @@ class VideoDetailActivity :
                 Player.STATE_IDLE -> {} // 空闲状态
                 Player.STATE_READY -> {
                     // Log.e("video","当前播放状态"+player?)
-                } // 可以被播放状态
+                }
             }
         }
 

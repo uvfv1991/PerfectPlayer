@@ -23,11 +23,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/search"
-        android:title="搜索"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/wzbf"
         android:title="网址播放"
         app:showAsAction="ifRoom" />

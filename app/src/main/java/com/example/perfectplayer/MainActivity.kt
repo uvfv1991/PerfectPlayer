@@ -77,6 +77,7 @@ class MainActivity : BaseActivity() {
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
                     Toast.makeText(this, "所有申请的权限都已通过", Toast.LENGTH_SHORT).show()
+
                 } else {
                     Toast.makeText(this, "您拒绝了如下权限：$deniedList", Toast.LENGTH_SHORT).show()
                 }
